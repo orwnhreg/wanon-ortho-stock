@@ -1,3 +1,7 @@
 *.bak.html
 *.light.bak
 warroom-samkok/
+dashboard_local.html
+dashboard_local.py
+build_local_dash.py
+dashboard_data.json

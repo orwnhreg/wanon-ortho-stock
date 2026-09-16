@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ตั้งค่า | รพ.วานรนิวาส</title>
+<style>
+  :root {
+    --nx-primary-900: #2E3F38;
+    --nx-primary-700: #39473F;
+    --nx-ink-900: #1E2A25;
+    --nx-secondary-400: #9AA6BD;
+    --nx-secondary-300: #8B97B0;
+    --nx-mint-100: #DCEEE4;
+    --nx-mint-50: #E2F0E8;
+    --nx-mint-border: #C9E6D8;
+    --nx-r-sm: 6px;
+    --nx-r-md: 10px;
+    --nx-r-lg: 14px;
+    --nx-r-pill: 999px;
+    --nx-shadow-sm: 0 1px 3px rgba(30,42,37,.08);
+    --nx-shadow-md: 0 10px 25px rgba(30,42,37,.15);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f2f4f8;
+    font-family: 'Noto Sans Thai', 'Sarabun', sans-serif;
+    color: #1f2937;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 16px 16px 60px; }
+  header { margin-bottom: 16px; }
+  header h1 { color: var(--nx-primary-900); font-size: 20px; margin: 0 0 4px; }
+  header p { margin: 0; font-size: 13px; color: #6b7280; }
+  nav.pagenav { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  nav.pagenav a {
+    font-size: 12.5px; color: var(--nx-primary-900); text-decoration: none;
+    background: #fff; border: 1px solid var(--nx-mint-border); padding: 6px 12px;
+    border-radius: 999px; font-weight: 600;
+  }
+  nav.pagenav a:hover { background: var(--nx-mint-100); }
+  nav.pagenav a.current { background: var(--nx-primary-900); color: #fff; border-color: var(--nx-primary-900); }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--nx-shadow-sm);
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-head h2 { font-size: 15px; margin: 0; color: #111827; }
+  button { font-family: inherit; }
+  button.primary {
+    background: var(--nx-primary-900); color: #fff; border: none;
+    padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 14px;
+  }
+  button.primary:hover { background: var(--nx-primary-700); }
+  button.secondary {
+    background: #e5e7eb; color: #1f2937; border: none;
+    padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 14px;
+  }
+  button.secondary:hover { background: #d7ddd9; }
+  button.danger {
+    background: #fee2e2; color: #b91c1c; border: none;
+    padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;
+  }
+  button.danger:hover { background: #fecaca; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #e5e7eb; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--nx-primary-900); color: #fff; padding: 10px 8px; text-align: left; font-weight: 600;
+  }
+  tbody td { padding: 6px 8px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+  tbody tr:hover { background: #f8fafc; }
+  col.col-right { width: 55%; }
+  col.col-code { width: 30%; }
+  col.col-actions { width: 15%; }
+  input[type="text"] {
+    width: 100%; padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 6px;
+    font-size: 13px; font-family: inherit; background: #fff;
+  }
+  input[type="text"]:focus { outline: 2px solid var(--nx-secondary-400); border-color: var(--nx-primary-900); }
+  select {
+    width: 100%; padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 6px;
+    font-size: 13px; font-family: inherit; background: #fff;
+  }
+  select:focus { outline: 2px solid var(--nx-secondary-400); border-color: var(--nx-primary-900); }
+
+  /* ปุ่มดึงข้อมูลเพิ่ม (load more) — เหมือน dashboard */
+  .loadmore { display: none; align-items: center; justify-content: center; gap: 12px; padding: 14px 0 2px; }
+  .loadmore.visible { display: flex; }
+  .loadmore .lm-hint { font-size: 12.5px; color: #64748b; }
+  .empty-row td { text-align: center; padding: 24px; color: #9ca3af; }
+  .msg {
+    margin-top: 12px; padding: 10px 12px; border-radius: 8px; font-size: 13px; display: none;
+  }
+  .msg.show { display: block; }
+  .msg.ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .msg.err { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  .hint { font-size: 12px; color: #6b7280; margin: -4px 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>⚙️ ตั้งค่า</h1>
+    <p>โรงพยาบาลวานรนิวาส — ตั้งค่าระบบ</p>
+    <nav class="pagenav">
+      <a href="dashboard_rt.html">📋 Dashboard</a>
+      <a href="lockingscrew35_usage_form.html">📋 บันทึกการใช้อุปกรณ์</a>
+      <a href="device_mapping.html">🔗 จับคู่-รหัสเบิก</a>
+      <a href="edit_claim_code.html">🛠️ แก้ไขรหัสเบิก</a>
+      <a href="settings.html" class="current">⚙️ ตั้งค่า</a>
+    </nav>
+  </header>
+
+  <div class="card">
+    <div class="card-head">
+      <h2>จับคู่สิทธิการรักษา → รหัสเบิก</h2>
+    </div>
+    <p class="hint">สิทธิการรักษา (ค่าดิบจากทะเบียน) แต่ละรายการ จะถูกแปลงเป็นรหัสเบิก 1 ใน 5 อัตโนมัติในฟอร์มบันทึกการใช้อุปกรณ์</p>
+
+    <div class="toolbar">
+      <button class="secondary" onclick="addRow()">＋ เพิ่มสิทธิ์</button>
+      <button class="primary" onclick="saveMapping()">💾 บันทึก</button>
+      <button class="secondary" onclick="resetToDefaults()">↺ คืนค่าเริ่มต้น (defaults)</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col class="col-right"><col class="col-code"><col class="col-actions">
+        </colgroup>
+        <thead>
+          <tr><th>สิทธิการรักษา</th><th>รหัสเบิก</th><th></th></tr>
+        </thead>
+        <tbody id="tbody">
+          <tr class="empty-row"><td colspan="3">กำลังโหลด...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="loadmore" id="loadmore-wrap">
+      <button class="primary" onclick="loadMore()">↓ ดึงข้อมูลเพิ่ม</button>
+      <span class="lm-hint" id="loadmore-hint"></span>
+    </div>
+
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<script>
+  const CODE_OPTIONS = [
+    { value: '', label: '— ไม่ระบุ —' },
+    { value: 'OFC', label: 'OFC' },
+    { value: 'UCS', label: 'UCS' },
+    { value: 'LGO', label: 'LGO' },
+    { value: 'NHS', label: 'NHS' },
+    { value: 'SSS', label: 'SSS (ประกันสังคม)' },
+    { value: 'PVT', label: 'PVT (สิทธิครูโรงเรียนเอกชน)' },
+  ];
+
+  let defaultsCache = {};
+  const PAGE_SIZE = 20;
+  let visibleLimit = PAGE_SIZE;
+
+  function showMsg(text, ok){
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = 'msg show ' + (ok ? 'ok' : 'err');
+  }
+
+  function codeSelectHtml(selected){
+    return '<select class="code-sel">' + CODE_OPTIONS.map(o =>
+      `<option value="${o.value}"${o.value === selected ? ' selected' : ''}>${o.label}</option>`
+    ).join('') + '</select>';
+  }
+
+  function addRow(right, code){
+    const tbody = document.getElementById('tbody');
+    const emptyRow = tbody.querySelector('.empty-row');
+    if (emptyRow) emptyRow.remove();
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td><input type="text" class="right-input" value="${(right || '').replace(/"/g, '&quot;')}" placeholder="เช่น UC, ผู้สูงอายุ"></td>` +
+      `<td>${codeSelectHtml(code || '')}</td>` +
+      `<td><button class="danger" onclick="this.closest('tr').remove(); applyPage()">🗑️ ลบ</button></td>`;
+    tbody.appendChild(tr);
+    applyPage();
+  }
+
+  // แสดงทีละ PAGE_SIZE, ปุ่ม "ดึงข้อมูลเพิ่ม" (เหมือน dashboard)
+  function applyPage(){
+    const tbody = document.getElementById('tbody');
+    const dataRows = Array.from(tbody.querySelectorAll('tr')).filter(tr => tr.querySelector('.right-input'));
+    const wrap = document.getElementById('loadmore-wrap');
+    const btr = document.querySelector('#loadmore-wrap button');
+    const hint = document.getElementById('loadmore-hint');
+    const total = dataRows.length;
+    if (!total){ wrap.classList.remove('visible'); return; }
+    dataRows.forEach((tr, i) => { tr.style.display = i < visibleLimit ? '' : 'none'; });
+    const rest = total - visibleLimit;
+    if (rest > 0){
+      wrap.classList.add('visible');
+      if (btr) btr.textContent = `↓ ดึงข้อมูลเพิ่ม (เหลือ ${rest})`;
+      hint.textContent = `แสดง ${Math.min(total, visibleLimit)} / ${total} รายการ`;
+    } else {
+      wrap.classList.remove('visible');
+    }
+  }
+
+  function loadMore(){
+    visibleLimit += PAGE_SIZE;
+    applyPage();
+  }
+
+  function renderMapping(mapping){
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    const keys = Object.keys(mapping);
+    if (!keys.length){
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="3">ยังไม่มีรายการ — กด "＋ เพิ่มสิทธิ์"</td></tr>';
+      return;
+    }
+    keys.forEach(k => addRow(k, mapping[k]));
+  }
+
+  function collectMapping(){
+    const mapping = {};
+    document.querySelectorAll('#tbody tr').forEach(tr => {
+      const rightInput = tr.querySelector('.right-input');
+      const codeSel = tr.querySelector('.code-sel');
+      if (!rightInput || !codeSel) return;
+      const right = rightInput.value.trim();
+      if (!right) return;
+      mapping[right] = codeSel.value;
+    });
+    return mapping;
+  }
+
+  async function loadMapping(){
+    try {
+      const res = await fetch('/api/rights-mapping');
+      if (!res.ok) throw new Error('โหลดไม่สำเร็จ');
+      const data = await res.json();
+      defaultsCache = data.defaults || {};
+      renderMapping(data.mapping || {});
+    } catch (e) {
+      showMsg('โหลดข้อมูลไม่สำเร็จ: ' + e.message, false);
+      renderMapping({});
+    }
+  }
+
+  async function saveMapping(){
+    const mapping = collectMapping();
+    try {
+      const res = await fetch('/api/rights-mapping', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mapping }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'บันทึกไม่สำเร็จ');
+      showMsg(`✅ บันทึกแล้ว (${data.count} รายการ)`, true);
+    } catch (e) {
+      showMsg('❌ ' + e.message, false);
+    }
+  }
+
+  function resetToDefaults(){
+    renderMapping(defaultsCache);
+    showMsg('โหลดค่าเริ่มต้นแล้ว — กด "💾 บันทึก" เพื่อยืนยัน', true);
+  }
+
+  loadMapping();
+</script>
+</body>
+</html>

@@ -5,3 +5,10 @@ dashboard_local.html
 dashboard_local.py
 build_local_dash.py
 dashboard_data.json
+checklist-deploy-รพ.md
+# realtime OR dashboard — ข้อมูลผู้ป่วยจริง ห้ามขึ้น Pages
+dashboard_rt.html
+dashboard_rt.py
+SPEC*.md
+__pycache__/
+rights_mapping.json

@@ -12,3 +12,4 @@ dashboard_rt.py
 SPEC*.md
 __pycache__/
 rights_mapping.json
+*.slate.bak

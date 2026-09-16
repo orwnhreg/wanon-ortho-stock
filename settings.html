@@ -6,27 +6,27 @@
 <title>ตั้งค่า | รพ.วานรนิวาส</title>
 <style>
   :root {
-    --nx-primary-900: #2E3F38;
-    --nx-primary-700: #39473F;
-    --nx-ink-900: #1E2A25;
-    --nx-secondary-400: #9AA6BD;
-    --nx-secondary-300: #8B97B0;
-    --nx-mint-100: #DCEEE4;
-    --nx-mint-50: #E2F0E8;
-    --nx-mint-border: #C9E6D8;
+    --nx-primary-900: #0f766e;
+    --nx-primary-700: #115e59;
+    --nx-ink-900: #134e4a;
+    --nx-secondary-400: #64748b;
+    --nx-secondary-300: #94a3b8;
+    --nx-mint-100: #ccfbf1;
+    --nx-mint-50: #f0fdfa;
+    --nx-mint-border: #99f6e4;
     --nx-r-sm: 6px;
     --nx-r-md: 10px;
     --nx-r-lg: 14px;
     --nx-r-pill: 999px;
-    --nx-shadow-sm: 0 1px 3px rgba(30,42,37,.08);
-    --nx-shadow-md: 0 10px 25px rgba(30,42,37,.15);
+    --nx-shadow-sm: 0 1px 3px rgba(19,78,74,.08);
+    --nx-shadow-md: 0 10px 25px rgba(19,78,74,.15);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: #f2f4f8;
+    background: #ffffff;
     font-family: 'Noto Sans Thai', 'Sarabun', sans-serif;
-    color: #1f2937;
+    color: var(--nx-ink-900);
   }
   .container { max-width: 900px; margin: 0 auto; padding: 16px 16px 60px; }
   header { margin-bottom: 16px; }
@@ -55,7 +55,7 @@
     flex-wrap: wrap;
     gap: 8px;
   }
-  .card-head h2 { font-size: 15px; margin: 0; color: #111827; }
+  .card-head h2 { font-size: 15px; margin: 0; color: var(--nx-ink-900); }
   button { font-family: inherit; }
   button.primary {
     background: var(--nx-primary-900); color: #fff; border: none;
@@ -63,10 +63,10 @@
   }
   button.primary:hover { background: var(--nx-primary-700); }
   button.secondary {
-    background: #e5e7eb; color: #1f2937; border: none;
+    background: #e5e7eb; color: #115e59; border: none;
     padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 14px;
   }
-  button.secondary:hover { background: #d7ddd9; }
+  button.secondary:hover { background: var(--nx-mint-100); }
   button.danger {
     background: #fee2e2; color: #b91c1c; border: none;
     padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 12px;
@@ -79,7 +79,7 @@
     background: var(--nx-primary-900); color: #fff; padding: 10px 8px; text-align: left; font-weight: 600;
   }
   tbody td { padding: 6px 8px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
-  tbody tr:hover { background: #f8fafc; }
+  tbody tr:hover { background: var(--nx-mint-100); }
   col.col-right { width: 55%; }
   col.col-code { width: 30%; }
   col.col-actions { width: 15%; }
